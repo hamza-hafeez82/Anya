@@ -1,101 +1,155 @@
-# Anya: The Emotional Intelligence Engine and Robotic Soul
+# Anya: The Intelligence Engine and Robotic Soul 
 
-![Anya Concept](file:///home/hamza/.gemini/antigravity/brain/ee585bff-385c-462b-8ec6-9c5e5111f5c3/anya_face_concept_1778248527626.png)
+![Anya Concept](./assets/branding/concept.png)
 
-## Overview
+## Meet Anya
+This is the repository for **Anya**. Anya is a robot, her body is just like the body of the Buddy robot, but with the heart of a lively character inspired by the anime *Spy x Family*. She is incredibly cute, her expressions are rich, and she is emotionally active and lively.
 
-Anya is a sophisticated robotic operating system and intelligence engine inspired by the expressive and lively character from Spy x Family. The objective of this project is to develop the "soul" of Anya—a cognitive architecture capable of rich emotional transitions, deep environmental understanding, and life-like interaction. This repository serves as the central hub for her brain, her facial expression system, and the underlying OS that powers her existence.
+The mission of this repository is to develop the **OS and the Soul of Anya**—the intelligence engine that powers her brain and her face. Her face is displayed as a 2D web application with rich animations, seamless transitions, and live, intelligent changes of facial expressions.
 
-Developed by Hamza Hafeez.
-
----
-
-## Philosophical Foundation
-
-Real intelligence is not a linear sequence of events; it is a continuous, parallel observability loop. Anya is designed to be perpetually aware. Unlike traditional AI systems that "pause" to process, Anya maintains a persistent state of perception. While she speaks, she continues to track faces, detect shifts in tone, and monitor her own internal hardware state. She does not just react; she exists in a state of constant cognitive flux.
+Developed with vision and passion by **Hamza Hafeez**.
 
 ---
 
-## The Cognitive Architecture
+## The Cognitive Philosophy: The Observability Loop
 
-The core of Anya is built upon a three-tiered perception and cognition loop: Perception - Cognition - Expression.
+For Anya to be truly intelligent, she needs to do more than just process commands; she needs a **Perception - Cognition - Expression** loop. This is her first observability loop—the way she understands her world before she acts.
 
-### 1. The Environment Layer
-Anya perceives her physical surroundings through a multi-modal sensor suite:
-*   **Visual Scene Understanding**: Utilizing camera inputs to determine the type of environment (e.g., a private bedroom vs. a crowded public space), identifying objects, and measuring their social and physical importance.
-*   **Acoustic Atmosphere**: Processing ambient sounds and noise levels to gauge the "social energy" of a room without direct interaction.
-*   **Spatial Awareness**: Integrating IR sensors and orientation data to ensure collision tolerance and precise physical measures.
+### Layer 1: The Environment Layer
+Anya begins by understanding her surroundings without disturbing herself:
+*   **Vision (Mobile Camera)**: Deep scene understanding. She determines the type of environment she is in, what is happening, and the general context.
+*   **Audio (Microphone)**: Detecting sounds, levels, and ambient noise to catch what her "eyes" might miss.
+*   **Spatial (IR Sensors)**: Measuring distances and orientation. With IR sensors, she calculates obstacles perfectly, making her collision-tolerant and precise in her measures.
 
-### 2. The People Layer
-This layer handles social dynamics and interpersonal context:
-*   **Identity and Relation**: Recognizing individuals and retrieving relationship memories (e.g., distinguishing an "owner" with high familiarity from a stranger).
-*   **Expression and Pose Detection**: Analyzing facial expressions, body language, and physical actions to understand the human state.
-*   **Linguistic and Tonal Analysis**: Capturing not just the words spoken, but the tone, speed, and volume to estimate intent and sentiment.
+### Layer 2: The People Layer
+Anya loves social interaction and works to determine:
+*   **Identity**: Face recognition to know exactly who is in front of her.
+*   **Contextual Analysis**: Expression detection, pose/action detection, and speech/tone detection.
+*   **Relationship Management**: She figures out who you are, what you are doing, what your relation is to her, and even the sentiment behind your words.
 
-### 3. The Self Layer
-Anya maintains an internal model of herself:
-*   **Memory and Identity**: A persistent memory system that stores past interactions and defines her core personality.
-*   **Internal State**: Real-time tracking of her mood, emotional stability, curiosity levels, and "social battery."
-*   **Physical State**: Monitoring battery life, temperature, and motor load to ensure her hardware remains within safe operating parameters.
-
----
-
-## The Intelligence Engine
-
-Anya’s cognition is probabilistic and context-heavy. Instead of binary emotional states, she evaluates candidates. For instance, rather than simply being "happy," the engine calculates a 0.82 confidence in happiness and a 0.44 confidence in excitement. This nuance allows for the subtle, complex facial transitions that define her character.
-
-The output of the Perception Engine is a dense, semantically rich context object that summarizes her entire reality at any given timestamp, enabling advanced decision-making by Large Language Models or specialized behavioral planners.
+### Layer 3: The Self Layer
+Anya knows who she is:
+*   **Memory & Identity**: Recalling past memories and identifying her own state.
+*   **Internal State**: Monitoring her hardware state, current mood, and personality mode.
+*   **Relationship Memory**: Remembering how she usually interacts with you and what your past together was like.
 
 ---
 
-## Technical Implementation Strategy
+## Pure Context Cognition
 
-To achieve sub-one-second latency and high-fidelity expressions, Anya utilizes a distributed "Organ" architecture.
+Anya's perception engine compiles her world into a pure, context-heavy summary. Every moment is captured in a sentence like:
 
-### Communication Backbone
-The system relies on an asynchronous message bus (ZeroMQ or Redis Streams). Each subsystem—Vision, Audio, Emotion, Memory—operates as an independent cognitive organ, continuously publishing states and observations to the central bus.
+> *"In [environment], [person] who is [relation], currently at [state][emotion/action], said [words] in [tone], while I am [state] doing [action]."*
 
-### High-Performance Hybrid Stack
-*   **Python**: Leveraged for its extensive AI and Computer Vision ecosystem, allowing for rapid iteration of cognitive models.
-*   **Rust**: Integrated for ultra-low latency pipelines, sensor fusion, and real-time concurrency management.
-*   **PixiJS**: The Face Engine utilizes PixiJS for 2D animation, leveraging GPU acceleration for smooth emotional transitions, eye interpolation, and particle effects.
+### The Brain's Data Structure
+Her internal state is a rich, semantic JSON that looks like this:
 
-### Expression Rendering
-Facial expressions are parameterized to allow for fluid movement:
-*   `eye_open`: Float (0.0 to 1.0)
-*   `smile`: Float (0.0 to 1.0)
-*   `blush`: Float (0.0 to 1.0)
-*   `brow_angle`: Float (-1.0 to 1.0)
+```json
+{
+  "timestamp": "2026-05-08T18:42:11Z",
+  "environment": {
+    "scene": { "type": "bedroom", "confidence": 0.93 },
+    "atmosphere": { "lighting": "dim_warm", "emotional_tone": "peaceful" },
+    "spatial_awareness": { "collision_risk": "low" }
+  },
+  "people": [{
+    "identity": { "id": "hamza", "relation": "owner" },
+    "emotional_analysis": { "primary_emotion": "happy", "confidence": 0.82 },
+    "speech": { "text": "good morning anya", "tone": "gentle", "intent": "greeting" }
+  }],
+  "self": {
+    "internal_state": { "mood": "sleepy_but_happy", "social_battery": 0.76 },
+    "cognitive_state": { "current_goal": "maintain_social_interaction" }
+  },
+  "meta_cognition": {
+    "situation_summary": "Owner greeted Anya warmly in a calm private environment.",
+    "response_strategy": { "expression": "soft_happy_smile", "priority": "maintain_emotional_connection" }
+  }
+}
+```
 
 ---
 
-## Emotional Palette
+## Selective Attention & Probabilistic Mind
 
-Anya’s face is a canvas for her internal state. Below is a gallery of her current expressive capabilities, utilized by the PixiJS renderer to transition between complex moods.
+Anya doesn't just see everything; she **pays attention**. Her system dynamically prioritizes:
+1.  The owner's face
+2.  Loud or sudden sounds
+3.  Emotional shifts in the room
+4.  Collision risks
 
-| ![Happy](file:///home/hamza/Code/Anya/assets/emotions/happy.jpg) | ![Excited](file:///home/hamza/Code/Anya/assets/emotions/excited.jpg) | ![Loved](file:///home/hamza/Code/Anya/assets/emotions/loved.jpg) | ![Laugh](file:///home/hamza/Code/Anya/assets/emotions/laugh.jpg) |
+**Selective Cognition** is very advanced. Real perception is probabilistic, so Anya never just thinks someone is "happy." She calculates **Emotion Candidates**:
+
+```json
+{
+  "emotion_candidates": [
+    { "emotion": "happy", "confidence": 0.82 },
+    { "emotion": "excited", "confidence": 0.44 }
+  ]
+}
+```
+This nuance makes her reactions feel real and robust.
+
+---
+
+## The Architecture: Parallel Organs
+
+Anya **NEVER stops perceiving while speaking**. This is her most important rule. While talking, she still tracks faces, detects interruptions, and maintains eye contact.
+
+### The Message Bus
+We don't do things sequentially; we do them **simultaneously**. Anya uses a high-speed Message Bus where every subsystem behaves like an independent cognitive organ.
+
+```
+                    Message Bus
+                          │
+ ┌──────────┬──────────┬──────────┬──────────┐
+ │          │          │          │          │
+Vision    Audio     Sensors    Memory     Emotion
+Engine    Engine     Engine     Engine      Engine
+ │          │          │          │          │
+ └──────────┴──────────┴──────────┴──────────┘
+                          │
+                  Context Aggregator
+                          │
+                  Cognitive Planner
+                          │
+              Expression & Action Layer
+```
+
+### The Tech Stack
+*   **Language**: A **Python + Rust** hybrid. Python for the vast AI/CV ecosystem, and Rust for ultra-low latency, concurrency, and sensor fusion.
+*   **Communication**: Async architecture using **ZeroMQ** (or Redis Streams/NATS) for message-driven, real-time events.
+*   **Face Engine**: **PixiJS** for smooth, GPU-accelerated animations, eye interpolation, and parameterized emotional rendering.
+
+```json
+{
+  "eye_open": 0.7,
+  "smile": 0.4,
+  "blush": 0.1,
+  "brow_angle": -0.3,
+  "focus_direction": "left"
+}
+```
+
+---
+
+## The many faces of Anya
+
+Below is the emotional palette that our PixiJS engine uses to bring Anya to life.
+
+| ![Happy](./assets/emotions/happy.jpg) | ![Excited](./assets/emotions/excited.jpg) | ![Loved](./assets/emotions/loved.jpg) | ![Laugh](./assets/emotions/laugh.jpg) |
 |:---:|:---:|:---:|:---:|
-| **Happy** | **Excited** | **Loved** | **Laughing** |
+| **Happy!** | **Excited!** | **Loved!** | **Hehe!** |
 
-| ![Shocked](file:///home/hamza/Code/Anya/assets/emotions/shocked.jpg) | ![Cringe](file:///home/hamza/Code/Anya/assets/emotions/cringe.jpg) | ![Creepy](file:///home/hamza/Code/Anya/assets/emotions/creepy.jpg) | ![Cry](file:///home/hamza/Code/Anya/assets/emotions/cry.jpg) |
+| ![Shocked](./assets/emotions/shocked.jpg) | ![Cringe](./assets/emotions/cringe.jpg) | ![Creepy](./assets/emotions/creepy.jpg) | ![Cry](./assets/emotions/cry.jpg) |
 |:---:|:---:|:---:|:---:|
-| **Shocked** | **Cringe** | **Smug / Heh** | **Crying** |
+| **Gasp!** | **Oof...** | **Heh.** | **Waaaah!** |
 
-| ![Sleepy](file:///home/hamza/Code/Anya/assets/emotions/sleepy.jpg) | ![Hurt](file:///home/hamza/Code/Anya/assets/emotions/hurt.jpg) | ![Neutral](file:///home/hamza/Code/Anya/assets/emotions/neutral.jpg) |
+| ![Sleepy](./assets/emotions/sleepy.jpg) | ![Hurt](./assets/emotions/hurt.jpg) | ![Neutral](./assets/emotions/neutral.jpg) |
 |:---:|:---:|:---:|
-| **Sleepy** | **Hurt** | **Neutral** |
-
----
-
-## Roadmap: How We Build Anya
-
-1.  **Foundation**: Establish the ZeroMQ Message Bus to connect Python and Rust modules.
-2.  **Sensory Integration**: Develop the Environment and People layers using optimized CV pipelines.
-3.  **The Mind**: Implement the probabilistic emotion engine and memory recall systems.
-4.  **The Face**: Build the PixiJS expression renderer with real-time parameter interpolation.
-5.  **Fusion**: Integrate the Cognitive Planner to synthesize perception into expressive actions.
+| **Zzz...** | **Ouchy** | **...** |
 
 ---
 
 **Developed by Hamza Hafeez**
-Anya's development is a pursuit of creating not just a robot, but a presence that feels alive, responsive, and truly intelligent.
+*Building the OS of the future, one Waku Waku at a time.*
