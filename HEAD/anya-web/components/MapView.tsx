@@ -1,19 +1,10 @@
 "use client";
 
 import { useWS } from "@/lib/ws-context";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { MapContainer, TileLayer, Marker, Polyline, useMap } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
-
-// Fix leaflet icon issues
-const anyaIcon = L.divIcon({
-  className: "custom-icon",
-  html: `<div style="width: 12px; height: 12px; background-color: var(--accent-pink); border-radius: 50%; box-shadow: var(--glow-pink); animation: ping 1.5s cubic-bezier(0, 0, 0.2, 1) infinite;"></div>
-         <div style="width: 12px; height: 12px; background-color: var(--accent-pink); border-radius: 50%; position: absolute; top: 0; left: 0;"></div>`,
-  iconSize: [12, 12],
-  iconAnchor: [6, 6]
-});
 
 function MapUpdater({ center }: { center: [number, number] }) {
   const map = useMap();
@@ -29,6 +20,17 @@ export default function MapView() {
   const [accuracy, setAccuracy] = useState<number>(0);
   const [trail, setTrail] = useState<[number, number][]>([]);
   const [hasGPS, setHasGPS] = useState(false);
+
+  // Memoize Leaflet icon on the client side to avoid constant recreation and DOM race conditions
+  const anyaIcon = useMemo(() => {
+    return L.divIcon({
+      className: "custom-icon",
+      html: `<div style="width: 12px; height: 12px; background-color: var(--accent-pink); border-radius: 50%; box-shadow: var(--glow-pink); animation: ping 1.5s cubic-bezier(0, 0, 0.2, 1) infinite;"></div>
+             <div style="width: 12px; height: 12px; background-color: var(--accent-pink); border-radius: 50%; position: absolute; top: 0; left: 0;"></div>`,
+      iconSize: [12, 12],
+      iconAnchor: [6, 6]
+    });
+  }, []);
 
   useEffect(() => {
     // Try browser GPS
