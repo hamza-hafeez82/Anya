@@ -1,7 +1,7 @@
 "use client";
 
 import { useWS } from "@/lib/ws-context";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import { Detection } from "@/lib/types";
 
 export function CameraView() {
@@ -9,27 +9,41 @@ export function CameraView() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [hasPermission, setHasPermission] = useState<boolean | null>(null);
+  const [facingMode, setFacingMode] = useState<"user" | "environment">("user");
   const [detections, setDetections] = useState<{ faces: Detection[], objects: Detection[] }>({ faces: [], objects: [] });
 
-  useEffect(() => {
-    // Request camera
-    navigator.mediaDevices.getUserMedia({ 
-      video: { facingMode: "environment" } 
-    }).then((stream) => {
+  const startCamera = useCallback(async (mode: "user" | "environment") => {
+    try {
+      // Stop existing tracks
+      if (videoRef.current?.srcObject) {
+        const stream = videoRef.current.srcObject as MediaStream;
+        stream.getTracks().forEach(track => track.stop());
+      }
+      
+      const stream = await navigator.mediaDevices.getUserMedia({ 
+        video: { facingMode: mode } 
+      });
       setHasPermission(true);
       if (videoRef.current) {
         videoRef.current.srcObject = stream;
       }
-    }).catch((err) => {
+    } catch (err) {
       console.error("Camera access denied or unavailable", err);
-      // Fallback to try any camera if environment facing fails
-      navigator.mediaDevices.getUserMedia({ video: true }).then((stream) => {
+      // Fallback
+      try {
+        const fallbackStream = await navigator.mediaDevices.getUserMedia({ video: true });
         setHasPermission(true);
         if (videoRef.current) {
-          videoRef.current.srcObject = stream;
+          videoRef.current.srcObject = fallbackStream;
         }
-      }).catch(() => setHasPermission(false));
-    });
+      } catch (fallbackErr) {
+        setHasPermission(false);
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    startCamera(facingMode);
 
     const handleDetections = (data: any) => {
       if (data.faces || data.objects) {
@@ -45,7 +59,11 @@ export function CameraView() {
         stream.getTracks().forEach(track => track.stop());
       }
     };
-  }, [on, off]);
+  }, [facingMode, on, off, startCamera]);
+
+  const toggleCamera = () => {
+    setFacingMode(prev => prev === "user" ? "environment" : "user");
+  };
 
   // Draw bounding boxes
   useEffect(() => {
@@ -110,20 +128,32 @@ export function CameraView() {
   }
 
   return (
-    <div className="relative w-full aspect-[3/4] bg-black rounded-lg overflow-hidden border border-[var(--border)] panel-brackets">
+    <div className="relative w-full aspect-video md:aspect-[21/9] bg-black rounded-lg overflow-hidden border border-[var(--border)] panel-brackets group">
       <video 
         ref={videoRef}
         autoPlay 
         playsInline 
         muted 
-        className="absolute inset-0 w-full h-full object-cover"
+        className={`absolute inset-0 w-full h-full object-cover ${facingMode === 'user' ? 'scale-x-[-1]' : ''}`}
       />
       <canvas 
         ref={canvasRef}
-        width={300} // Logical size, will stretch to fit via CSS
-        height={400}
+        width={640} // Logical size
+        height={360}
         className="absolute inset-0 w-full h-full pointer-events-none"
       />
+      <button 
+        onClick={toggleCamera}
+        className="absolute bottom-4 right-4 bg-[rgba(0,0,0,0.6)] hover:bg-[var(--bg-panel)] border border-[var(--border)] text-[var(--text-primary)] rounded-full p-3 transition-all z-20 backdrop-blur"
+        title="Toggle Camera"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M20 7h-3a2 2 0 0 1-2-2V4a2 2 0 0 0-2-2H9a2 2 0 0 0-2 2v1a2 2 0 0 1-2 2H2a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h20a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2Z"/>
+          <path d="M16 11a4 4 0 0 1-8 0"/>
+          <path d="M12 15v-4"/>
+          <path d="m9 8 3-3 3 3"/>
+        </svg>
+      </button>
     </div>
   );
 }
