@@ -26,7 +26,7 @@ export function StatusBar() {
   };
 
   return (
-    <div className="fixed top-0 left-0 right-0 h-[40px] bg-[var(--bg-secondary)] border-b border-[var(--border)] z-50 flex items-center justify-between px-3 font-mono text-[11px] max-w-[430px] mx-auto">
+    <div className="fixed top-0 left-0 right-0 h-[40px] bg-[var(--bg-secondary)] border-b border-[var(--border)] z-50 flex items-center justify-between px-3 font-mono text-[11px] pt-[env(safe-area-inset-top)] pl-[env(safe-area-inset-left)] pr-[env(safe-area-inset-right)] w-full">
       {/* Left side */}
       <div className="flex items-center space-x-2">
         <span className="text-[var(--accent-pink)] font-bold tracking-widest uppercase">ANYA OS</span>

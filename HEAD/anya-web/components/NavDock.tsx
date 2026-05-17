@@ -16,7 +16,7 @@ export function NavDock() {
   const pathname = usePathname();
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 h-[60px] bg-[var(--bg-secondary)] border-t border-[var(--border)] z-50 flex items-center justify-around px-2 max-w-[430px] mx-auto">
+    <nav className="fixed bottom-0 left-0 right-0 h-[60px] bg-[var(--bg-secondary)] border-t border-[var(--border)] z-50 flex items-center justify-around px-2 pb-[env(safe-area-inset-bottom)] pl-[env(safe-area-inset-left)] pr-[env(safe-area-inset-right)] w-full">
       {NAV_ITEMS.map((item) => {
         const isActive = pathname === item.path;
         return (
