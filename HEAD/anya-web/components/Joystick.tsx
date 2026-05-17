@@ -16,6 +16,18 @@ export default function Joystick({ label, type, onMove, onEnd }: JoystickProps) 
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const posRef = useRef({ x: 0, y: 0 });
 
+  const onMoveRef = useRef(onMove);
+  const onEndRef = useRef(onEnd);
+
+  // Sync callbacks without recreating the joystick instance
+  useEffect(() => {
+    onMoveRef.current = onMove;
+  }, [onMove]);
+
+  useEffect(() => {
+    onEndRef.current = onEnd;
+  }, [onEnd]);
+
   useEffect(() => {
     if (!containerRef.current) return;
 
@@ -28,17 +40,15 @@ export default function Joystick({ label, type, onMove, onEnd }: JoystickProps) 
     });
 
     managerRef.current.on("move", (evt: any, data: any) => {
-      // data.vector might be undefined on some events
       let x = data?.vector?.x || 0;
       let y = data?.vector?.y || 0; // note nipplejs y is inverted usually, up is positive here
       
-      // If it's a neck, maybe constrain or scale differently, but the prompt says just map -1 to 1.
       posRef.current = { x, y };
       
       // Start throttle interval if not running
       if (!intervalRef.current) {
         intervalRef.current = setInterval(() => {
-          onMove(posRef.current);
+          onMoveRef.current(posRef.current);
         }, 50); // 50ms throttle
       }
     });
@@ -49,14 +59,14 @@ export default function Joystick({ label, type, onMove, onEnd }: JoystickProps) 
         intervalRef.current = null;
       }
       posRef.current = { x: 0, y: 0 };
-      onEnd();
+      onEndRef.current();
     });
 
     return () => {
       if (intervalRef.current) clearInterval(intervalRef.current);
       if (managerRef.current) managerRef.current.destroy();
     };
-  }, [onMove, onEnd]);
+  }, []);
 
   return (
     <div className="flex flex-col items-center">
