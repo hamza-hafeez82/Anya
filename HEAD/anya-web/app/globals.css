@@ -1,0 +1,95 @@
+@import url('https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --color-bg-primary: var(--bg-primary);
+  --color-bg-secondary: var(--bg-secondary);
+  --color-bg-panel: var(--bg-panel);
+  --color-accent-pink: var(--accent-pink);
+  --color-accent-green: var(--accent-green);
+  --color-accent-cyan: var(--accent-cyan);
+  --color-accent-yellow: var(--accent-yellow);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-border-subtle: var(--border);
+  
+  --font-mono: 'Geist Mono', monospace;
+  --font-sans: 'Zen Kaku Gothic New', sans-serif;
+}
+
+:root {
+  --bg-primary: #080810;
+  --bg-secondary: #0f0f1a;
+  --bg-panel: #12121f;
+  --accent-pink: #ff6b9d;
+  --accent-green: #4ade80;
+  --accent-cyan: #22d3ee;
+  --accent-yellow: #fbbf24;
+  --text-primary: #f0f0ff;
+  --text-secondary: #8888aa;
+  --border: #1e1e35;
+  --glow-pink: 0 0 20px rgba(255, 107, 157, 0.3);
+  --glow-green: 0 0 20px rgba(74, 222, 128, 0.3);
+  --glow-cyan: 0 0 20px rgba(34, 211, 238, 0.2);
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  overflow-x: hidden;
+  height: 100%;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(255,255,255,0.01) 2px,
+    rgba(255,255,255,0.01) 4px
+  );
+  pointer-events: none;
+  z-index: 9999;
+}
+
+.panel {
+  background-color: var(--bg-panel);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  position: relative;
+}
+
+.panel::before { 
+  content: '┌'; 
+  position: absolute; 
+  top: -1px; 
+  left: -1px; 
+  color: var(--accent-pink); 
+  font-size: 10px;
+  line-height: 1;
+}
+
+.panel::after { 
+  content: '┐'; 
+  position: absolute; 
+  top: -1px; 
+  right: -1px; 
+  color: var(--accent-pink); 
+  font-size: 10px;
+  line-height: 1;
+}
+
+/* Hide scrollbars but allow scroll */
+::-webkit-scrollbar {
+  display: none;
+}
+* {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
