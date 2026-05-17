@@ -2,8 +2,10 @@
 
 import { useWS } from "@/lib/ws-context";
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 
 export function StatusBar() {
+  const pathname = usePathname();
   const { status, systemStatus } = useWS();
   const [now, setNow] = useState(new Date());
 
@@ -11,6 +13,8 @@ export function StatusBar() {
     const timer = setInterval(() => setNow(new Date()), 1000);
     return () => clearInterval(timer);
   }, []);
+
+  if (pathname === "/") return null;
 
   const formatUptime = (seconds: number) => {
     const h = Math.floor(seconds / 3600);

@@ -26,12 +26,12 @@ export function AnyaFace() {
   };
 
   return (
-    <div className="relative w-full aspect-square flex items-center justify-center">
+    <div className="relative w-full h-full flex items-center justify-center">
       {/* Background vignette/glow */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,107,157,0.1)_0%,transparent_70%)] rounded-full"></div>
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,107,157,0.15)_0%,transparent_70%)] rounded-full"></div>
       
       {/* Face Image Container */}
-      <div className="relative w-[70%] aspect-square rounded-2xl overflow-hidden shadow-[var(--glow-pink)] animate-[breathe_4s_ease-in-out_infinite] bg-[var(--bg-secondary)] border border-[var(--border)]">
+      <div className="relative w-[90vmin] h-[90vmin] max-w-[85vh] max-h-[85vh] aspect-square rounded-2xl overflow-hidden shadow-[var(--glow-pink)] animate-[breathe_4s_ease-in-out_infinite] bg-[var(--bg-secondary)] border border-[var(--border)]">
         
         {/* We use standard img to easily handle error fallback (since images might not exist locally) */}
         
